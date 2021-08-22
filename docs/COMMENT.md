@@ -1,6 +1,4 @@
-# Notes
-
-## Eith Words
+# Comment
 
 ### IS-COMMENT
 
@@ -9,6 +7,12 @@
 Checks if line `n1` is a comment or not. Pushes -1 onto the stack if
 it is and 0 otherwise.
 
+### IS-COMMENT-RANGE
+
+( n1 n2 -- n3 )
+
+Checks if all lines in range `[n1, n2)` are comments. Pushes -1 onto the stack if
+so and 0 otherwise.
 
 ### READ-COMMENT
 

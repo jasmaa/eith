@@ -23,6 +23,7 @@ class Interpreter(CommentInterpreterMixin, CoreInterpreterMixin):
             self.step()
         self.file.seek(0)
         self.file.write('\n'.join(self.raw_lines)+'\n')
+        self.file.truncate()
 
     def step(self):
         """Steps one instruction.
@@ -88,6 +89,8 @@ class Interpreter(CommentInterpreterMixin, CoreInterpreterMixin):
         # === Comment words ===
         if token == 'IS-COMMENT':
             self.interp_is_comment()
+        elif token == 'IS-COMMENT-RANGE':
+            self.interp_is_comment_range()
         elif token == 'READ-COMMENT':
             self.interp_read_comment()
         elif token == 'COMMENT':
