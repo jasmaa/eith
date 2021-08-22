@@ -7,7 +7,7 @@ Made for [LangJam #0001](https://github.com/langjam/jam0001).
 ## What is this?
 
 Eith is a Forth-like language that allows for comment reading and manipulation.
-In particular, language implements a subset of Forth's Core words as well as the Eith Comment words.
+In particular, the language implements a subset of Forth's Core words as well as the Eith Comment words.
 
 Eith provides all the familiarity of a traditional stack-based language and combines it with the
 power of dynamically modifiable source code.
@@ -34,4 +34,4 @@ This means that certain constructs, such as `IF ... THEN` or `DO ... LOOP` must 
 
 This project was made for fun.
 
-<small>Please don't use it for real.</small>
+<sub>Please don't use it for real.</sub>
