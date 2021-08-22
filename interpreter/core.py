@@ -10,6 +10,11 @@ class CoreInterpreterMixin:
         a = self.stack.pop()
         self.stack.append(a + b)
 
+    def interp_sub(self):
+        b = self.stack.pop()
+        a = self.stack.pop()
+        self.stack.append(a - b)
+
     def interp_key(self):
         a = int(input())
         self.stack.append(a)
@@ -35,7 +40,7 @@ class CoreInterpreterMixin:
         for token in interp_tokens:
             self.interp_token(token)
 
-    def interp_loop(self, tokens: List[str]):
+    def interp_do_loop(self, tokens: List[str]):
         if tokens[-1] != ';':
             raise SyntaxError('missing ";".')
         if tokens[-2] != 'LOOP':
@@ -55,6 +60,18 @@ class CoreInterpreterMixin:
         if self.loop_idx == None:
             raise RuntimeError('use of "i" outside of loop is not allowed.')
         self.stack.append(self.loop_idx)
+
+    def interp_begin_until(self, tokens: List[str]):
+        if tokens[-1] != ';':
+            raise SyntaxError('missing ";".')
+        if tokens[-2] != 'UNTIL':
+            raise SyntaxError('missing "UNTIL".')
+
+        interp_tokens = tokens[1:len(tokens)-2]
+
+        while self.stack[-1] != 0:
+            for token in interp_tokens:
+                self.interp_token(token)
 
     def interp_dup(self):
         v = self.stack.pop()

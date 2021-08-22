@@ -44,7 +44,10 @@ class Interpreter(CommentInterpreterMixin, CoreInterpreterMixin):
             self.interp_if(tokens)
         elif len(tokens) >= 1 and tokens[0] == 'DO':
             # DO ... LOOP ;
-            self.interp_loop(tokens)
+            self.interp_do_loop(tokens)
+        elif len(tokens) >= 1 and tokens[0] == 'BEGIN':
+            # BEGIN ... UNTIL ;
+            self.interp_begin_until(tokens)
         else:
             # Single tokens
             for token in tokens:
@@ -77,6 +80,8 @@ class Interpreter(CommentInterpreterMixin, CoreInterpreterMixin):
         # === Core words ===
         elif token == '+':
             self.interp_add()
+        elif token == '-':
+            self.interp_sub()
         elif token == 'KEY':
             self.interp_key()
         elif token == '.':
