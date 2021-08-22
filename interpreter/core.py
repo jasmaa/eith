@@ -50,6 +50,10 @@ class CoreInterpreterMixin:
             raise RuntimeError('use of "i" outside of loop is not allowed.')
         self.stack.append(self.loop_idx)
 
+    def interp_j(self):
+        # TODO: implement
+        pass
+
     def interp_begin_until(self, tokens: List[str]):
         if tokens[-1] != 'UNTIL':
             raise SyntaxError('missing "UNTIL".')
@@ -68,6 +72,13 @@ class CoreInterpreterMixin:
         b = self.stack.pop()
         a = self.stack.pop()
         self.stack.append(a - b)
+
+    def interp_dot(self):
+        print(self.stack.pop())
+
+    def interp_dot_string(self, tokens: List[str]):
+        s = ' '.join(tokens[1:])
+        print(s[:-1])
 
     def interp_mult(self):
         b = self.stack.pop()
@@ -137,7 +148,7 @@ class CoreInterpreterMixin:
         self.stack.append(b)
         self.stack.append(a)
         self.stack.append(b)
-    
+
     def interp_two_over(self):
         d = self.stack.pop()
         c = self.stack.pop()
@@ -149,7 +160,7 @@ class CoreInterpreterMixin:
         self.stack.append(d)
         self.stack.append(a)
         self.stack.append(b)
-    
+
     def interp_two_swap(self):
         d = self.stack.pop()
         c = self.stack.pop()
@@ -160,22 +171,129 @@ class CoreInterpreterMixin:
         self.stack.append(a)
         self.stack.append(b)
 
-    def interp_key(self):
-        a = int(input())
+    def interp_lt(self):
+        b = self.stack.pop()
+        a = self.stack.pop()
+        self.stack.append(-1 if a < b else 0)
+
+    def interp_eq(self):
+        b = self.stack.pop()
+        a = self.stack.pop()
+        self.stack.append(-1 if a == b else 0)
+
+    def interp_gt(self):
+        b = self.stack.pop()
+        a = self.stack.pop()
+        self.stack.append(-1 if a > b else 0)
+
+    def interp_if_dup(self):
+        a = self.stack.pop()
+        if a != 0:
+            self.stack.append(a)
         self.stack.append(a)
 
-    def interp_dot(self):
-        print(self.stack.pop())
+    def interp_abs(self):
+        a = self.stack.pop()
+        self.stack.append(-a if a < 0 else a)
 
-    def interp_dot_string(self, tokens: List[str]):
-        s = ' '.join(tokens[1:])
-        print(s[:-1])
+    def interp_and(self):
+        b = self.stack.pop()
+        a = self.stack.pop()
+        self.stack.append(a & b)
+
+    def interp_bl(self):
+        self.stack.append(ord(' '))
+
+    def interp_cr(self):
+        print()
+
+    def interp_depth(self):
+        self.stack.append(len(self.stack))
+
+    def interp_drop(self):
+        self.stack.pop()
 
     def interp_dup(self):
         v = self.stack.pop()
         self.stack.append(v)
         self.stack.append(v)
 
+    def interp_emit(self):
+        a = self.stack.pop()
+        print(chr(a))
+
     def interp_invert(self):
         v = self.stack.pop()
         self.stack.append(-1 if v == 0 else 0)
+
+    def interp_key(self):
+        a = int(input())
+        self.stack.append(a)
+
+    def interp_lshift(self):
+        b = self.stack.pop()
+        a = self.stack.pop()
+        self.stack.append(a << b)
+
+    def interp_max(self):
+        b = self.stack.pop()
+        a = self.stack.pop()
+        self.stack.append(max(a, b))
+
+    def interp_min(self):
+        b = self.stack.pop()
+        a = self.stack.pop()
+        self.stack.append(min(a, b))
+
+    def interp_mod(self):
+        b = self.stack.pop()
+        a = self.stack.pop()
+        self.stack.append(a % b)
+
+    def interp_negate(self):
+        a = self.stack.pop()
+        self.stack.append(-a)
+
+    def interp_or(self):
+        b = self.stack.pop()
+        a = self.stack.pop()
+        self.stack.append(a | b)
+
+    def interp_over(self):
+        b = self.stack.pop()
+        a = self.stack.pop()
+        self.stack.append(a)
+        self.stack.append(b)
+        self.stack.append(a)
+
+    def interp_rot(self):
+        c = self.stack.pop()
+        b = self.stack.pop()
+        a = self.stack.pop()
+        self.stack.append(b)
+        self.stack.append(c)
+        self.stack.append(a)
+
+    def interp_rshift(self):
+        b = self.stack.pop()
+        a = self.stack.pop()
+        self.stack.append(a >> b)
+
+    def interp_space(self):
+        print(' ')
+
+    def interp_spaces(self):
+        a = self.stack.pop()
+        for _ in range(a):
+            print(' ')
+
+    def interp_swap(self):
+        b = self.stack.pop()
+        a = self.stack.pop()
+        self.stack.append(b)
+        self.stack.append(a)
+
+    def interp_xor(self):
+        b = self.stack.pop()
+        a = self.stack.pop()
+        self.stack.append(a ^ b)

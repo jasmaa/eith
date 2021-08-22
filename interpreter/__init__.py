@@ -140,14 +140,64 @@ class Interpreter(CommentInterpreterMixin, CoreInterpreterMixin):
             self.interp_two_over()
         elif token == '2SWAP':
             self.interp_two_swap()
+        elif token == '<':
+            self.interp_lt()
+        elif token == '=':
+            self.interp_eq()
+        elif token == '>':
+            self.interp_gt()
+        elif token == '?DUP':
+            self.interp_if_dup()
+        elif token == "ABS":
+            self.interp_abs()
+        elif token == 'AND':
+            self.interp_and()
+        elif token == 'BL':
+            self.interp_bl()
+        elif token == 'CR':
+            self.interp_cr()
+        elif token == 'DEPTH':
+            self.interp_depth()
+        elif token == 'DROP':
+            self.interp_drop()
+        elif token == 'DUP':
+            self.interp_dup()
+        elif token == 'EMIT':
+            self.interp_emit()
         elif token == 'KEY':
             self.interp_key()
         elif token == 'I':
             self.interp_i()
-        elif token == 'DUP':
-            self.interp_dup()
         elif token == 'INVERT':
             self.interp_invert()
+        elif token == 'J':
+            self.interp_j()
+        elif token == 'LSHIFT':
+            self.interp_lshift()
+        elif token == 'MAX':
+            self.interp_max()
+        elif token == 'MIN':
+            self.interp_min()
+        elif token == 'MOD':
+            self.interp_mod()
+        elif token == 'NEGATE':
+            self.interp_negate()
+        elif token == 'OR':
+            self.interp_or()
+        elif token == 'OVER':
+            self.interp_over()
+        elif token == 'ROT':
+            self.interp_rot()
+        elif token == 'RSHIFT':
+            self.interp_rshift()
+        elif token == 'SPACE':
+            self.interp_space()
+        elif token == 'SPACES':
+            self.interp_spaces()
+        elif token == 'SWAP':
+            self.interp_swap()
+        elif token == 'XOR':
+            self.interp_xor()
         elif token.isdigit() or len(token) >= 2 and token[0] == '-' and token[1:].isdigit():
             self.interp_number(token)
         else:
