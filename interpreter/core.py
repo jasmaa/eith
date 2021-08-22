@@ -74,11 +74,11 @@ class CoreInterpreterMixin:
         self.stack.append(a - b)
 
     def interp_dot(self):
-        print(self.stack.pop())
+        print(self.stack.pop(), end=' ')
 
     def interp_dot_string(self, tokens: List[str]):
         s = ' '.join(tokens[1:])
-        print(s[:-1])
+        print(s[:-1], end='')
 
     def interp_mult(self):
         b = self.stack.pop()
@@ -220,7 +220,7 @@ class CoreInterpreterMixin:
 
     def interp_emit(self):
         a = self.stack.pop()
-        print(chr(a))
+        print(chr(a), end='')
 
     def interp_invert(self):
         v = self.stack.pop()
@@ -280,12 +280,11 @@ class CoreInterpreterMixin:
         self.stack.append(a >> b)
 
     def interp_space(self):
-        print(' ')
+        print(' ', end='')
 
     def interp_spaces(self):
         a = self.stack.pop()
-        for _ in range(a):
-            print(' ')
+        print(' '*a, end='')
 
     def interp_swap(self):
         b = self.stack.pop()
