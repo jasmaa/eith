@@ -1,4 +1,4 @@
-\ Determines if a positive integer input is even.
+\ Uses nested comment wrappings to determine if a positive integer input is even.
 
 \ is-even
 KEY
