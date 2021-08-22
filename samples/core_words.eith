@@ -1,4 +1,4 @@
-\ Test core words.
+\ Tests core words.
 
 ." TEST /MOD : "
 1 2 /MOD . .
