@@ -22,6 +22,10 @@ class CoreInterpreterMixin:
     def interp_dot(self):
         print(self.stack.pop())
 
+    def interp_dot_string(self, tokens: List[str]):
+        s = ' '.join(tokens[1:])
+        print(s[:-1])
+
     def interp_number(self, token: str):
         self.stack.append(int(token))
 
@@ -73,7 +77,7 @@ class CoreInterpreterMixin:
 
         interp_tokens = tokens[1:len(tokens)-1]
 
-        while self.stack[-1] != 0:
+        while self.stack.pop() != 0:
             self.interp_tokens(interp_tokens)
 
     def interp_dup(self):

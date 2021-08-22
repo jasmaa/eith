@@ -1,0 +1,5 @@
+\ Printing strings.
+
+." hello world" ." it's surely a 5 day!"
+
+10 0 do ." index:" i . loop

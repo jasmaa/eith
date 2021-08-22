@@ -66,6 +66,16 @@ class Interpreter(CommentInterpreterMixin, CoreInterpreterMixin):
             end_idx = self.__find_end_idx(tokens, 0, 'BEGIN', 'UNTIL')
             self.interp_begin_until(tokens[:end_idx])
             self.interp_tokens(tokens[end_idx:])
+        elif tokens[0] == '."':
+            # Print string
+            end_idx = 1
+            while end_idx < len(tokens):
+                if tokens[end_idx][-1] == '"':
+                    break
+                end_idx += 1
+            end_idx += 1
+            self.interp_dot_string(tokens[:end_idx])
+            self.interp_tokens(tokens[end_idx:])
         else:
             # Single token
             self.interp_single_token(tokens[0])
