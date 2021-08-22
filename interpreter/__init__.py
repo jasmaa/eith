@@ -108,7 +108,7 @@ class Interpreter(CommentInterpreterMixin, CoreInterpreterMixin):
             self.interp_dup()
         elif token == 'INVERT':
             self.interp_invert()
-        elif token.isdigit():
+        elif token.isdigit() or len(token) >= 2 and token[0] == '-' and token[1:].isdigit():
             self.interp_number(token)
         else:
             raise RuntimeError(f'unexpected symbol "{token}"')
