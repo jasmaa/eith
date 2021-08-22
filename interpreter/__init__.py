@@ -1,3 +1,4 @@
+from typing import List, Tuple
 from .comment import CommentInterpreterMixin
 from .core import CoreInterpreterMixin
 
@@ -36,26 +37,41 @@ class Interpreter(CommentInterpreterMixin, CoreInterpreterMixin):
         line = raw_line.upper()
         tokens = line.split()
 
-        if len(tokens) >= 1 and tokens[0] == '\\':
-            # Comment, no-op
-            pass
-        elif len(tokens) >= 1 and tokens[0] == 'IF':
-            # IF ... (ELSE) THEN ;
-            self.interp_if(tokens)
-        elif len(tokens) >= 1 and tokens[0] == 'DO':
-            # DO ... LOOP ;
-            self.interp_do_loop(tokens)
-        elif len(tokens) >= 1 and tokens[0] == 'BEGIN':
-            # BEGIN ... UNTIL ;
-            self.interp_begin_until(tokens)
-        else:
-            # Single tokens
-            for token in tokens:
-                self.interp_token(token)
+        self.interp_tokens(tokens)
 
         self.pc += 1
 
-    def interp_token(self, token: str):
+    def interp_tokens(self, tokens: List[str]):
+        """Interprets line of tokens.
+        """
+
+        if len(tokens) == 0:
+            return
+
+        if tokens[0] == '\\':
+            # Comment, no-op
+            pass
+        elif tokens[0] == 'IF':
+            # IF ... (ELSE ...) THEN
+            end_idx = self.__find_end_idx(tokens, 0, 'IF', 'THEN')
+            self.interp_if(tokens[:end_idx])
+            self.interp_tokens(tokens[end_idx:])
+        elif tokens[0] == 'DO':
+            # DO ... LOOP
+            end_idx = self.__find_end_idx(tokens, 0, 'DO', 'LOOP')
+            self.interp_do_loop(tokens[:end_idx])
+            self.interp_tokens(tokens[end_idx:])
+        elif tokens[0] == 'BEGIN':
+            # BEGIN ... UNTIL
+            end_idx = self.__find_end_idx(tokens, 0, 'BEGIN', 'UNTIL')
+            self.interp_begin_until(tokens[:end_idx])
+            self.interp_tokens(tokens[end_idx:])
+        else:
+            # Single token
+            self.interp_single_token(tokens[0])
+            self.interp_tokens(tokens[1:])
+
+    def interp_single_token(self, token: str):
         """Interprets single token.
         """
 
@@ -96,3 +112,13 @@ class Interpreter(CommentInterpreterMixin, CoreInterpreterMixin):
             self.interp_number(token)
         else:
             raise RuntimeError(f'unexpected symbol "{token}"')
+
+    def __find_end_idx(self, tokens: List[str], idx: int, start_token: str, end_token: str) -> int:
+        counter = 1
+        while counter != 0 and idx < len(tokens) - 1:
+            idx += 1
+            if tokens[idx] == start_token:
+                counter += 1
+            elif tokens[idx] == end_token:
+                counter -= 1
+        return idx + 1
