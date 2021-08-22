@@ -12,4 +12,4 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     with open(args.input, 'r+') as f:
-        Interpreter(f).interp()
+        Interpreter(f).run()
