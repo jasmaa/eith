@@ -12,7 +12,7 @@ class Interpreter(CommentInterpreterMixin, CoreInterpreterMixin):
         self.stack = []
         self.pc = 0
         self.has_more = True
-        self.loop_idx = None
+        self.loop_idxs = []
         self.raw_lines = [l.strip() for l in self.file.readlines()]
 
     def run(self):

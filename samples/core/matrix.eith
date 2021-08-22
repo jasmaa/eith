@@ -1,0 +1,4 @@
+\ Prints an identity matrix. Demonstrates nested loops.
+
+KEY
+DUP 0 DO DUP 0 DO I J = IF 1 ELSE 0 THEN . LOOP CR LOOP

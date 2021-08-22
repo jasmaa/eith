@@ -40,19 +40,21 @@ class CoreInterpreterMixin:
 
         a = self.stack.pop()
         b = self.stack.pop()
+        self.loop_idxs.append(0)
         for i in range(a, b):
-            self.loop_idx = i
+            self.loop_idxs[-1] = i
             self.interp_tokens(interp_tokens)
-        self.loop_idx = None
+        self.loop_idxs.pop()
 
     def interp_i(self):
-        if self.loop_idx == None:
+        if len(self.loop_idxs) < 1:
             raise RuntimeError('use of "i" outside of loop is not allowed.')
-        self.stack.append(self.loop_idx)
+        self.stack.append(self.loop_idxs[0])
 
     def interp_j(self):
-        # TODO: implement
-        pass
+        if len(self.loop_idxs) < 2:
+            raise RuntimeError('use of "j" outside of nested loop is not allowed.')
+        self.stack.append(self.loop_idxs[1])
 
     def interp_begin_until(self, tokens: List[str]):
         if tokens[-1] != 'UNTIL':
