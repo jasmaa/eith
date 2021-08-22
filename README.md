@@ -29,3 +29,9 @@ deal with memory and addressing, several multi-word constructs, and user-defined
 
 Due to interpreting line-by-line, Eith also requires that each line must be independently interpretable.
 This means that certain constructs, such as `IF ... THEN` or `DO ... LOOP` must be on one line.
+
+## Disclaimer
+
+This project was made for fun.
+
+<small>Please don't use it for real.</small>
