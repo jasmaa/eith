@@ -104,14 +104,44 @@ class Interpreter(CommentInterpreterMixin, CoreInterpreterMixin):
             self.interp_toggle_comment_range()
 
         # === Core words ===
+        elif token == '*':
+            self.interp_mult()
+        elif token == '*/':
+            self.interp_mult_div()
+        elif token == '*/MOD':
+            self.interp_mult_div_mod()
         elif token == '+':
             self.interp_add()
         elif token == '-':
             self.interp_sub()
-        elif token == 'KEY':
-            self.interp_key()
         elif token == '.':
             self.interp_dot()
+        elif token == '/':
+            self.interp_div()
+        elif token == '/MOD':
+            self.interp_div_mod()
+        elif token == '0<':
+            self.interp_zero_lt()
+        elif token == '0=':
+            self.interp_zero_eq()
+        elif token == '1+':
+            self.interp_one_plus()
+        elif token == '1-':
+            self.interp_one_minus()
+        elif token == '2*':
+            self.interp_two_mult()
+        elif token == '2/':
+            self.interp_two_div()
+        elif token == '2DROP':
+            self.interp_two_drop()
+        elif token == '2DUP':
+            self.interp_two_dup()
+        elif token == '2OVER':
+            self.interp_two_over()
+        elif token == '2SWAP':
+            self.interp_two_swap()
+        elif token == 'KEY':
+            self.interp_key()
         elif token == 'I':
             self.interp_i()
         elif token == 'DUP':

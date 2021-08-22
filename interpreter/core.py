@@ -5,27 +5,6 @@ class CoreInterpreterMixin:
     """Eith Core interpreter mixin.
     """
 
-    def interp_add(self):
-        b = self.stack.pop()
-        a = self.stack.pop()
-        self.stack.append(a + b)
-
-    def interp_sub(self):
-        b = self.stack.pop()
-        a = self.stack.pop()
-        self.stack.append(a - b)
-
-    def interp_key(self):
-        a = int(input())
-        self.stack.append(a)
-
-    def interp_dot(self):
-        print(self.stack.pop())
-
-    def interp_dot_string(self, tokens: List[str]):
-        s = ' '.join(tokens[1:])
-        print(s[:-1])
-
     def interp_number(self, token: str):
         self.stack.append(int(token))
 
@@ -79,6 +58,118 @@ class CoreInterpreterMixin:
 
         while self.stack.pop() != 0:
             self.interp_tokens(interp_tokens)
+
+    def interp_add(self):
+        b = self.stack.pop()
+        a = self.stack.pop()
+        self.stack.append(a + b)
+
+    def interp_sub(self):
+        b = self.stack.pop()
+        a = self.stack.pop()
+        self.stack.append(a - b)
+
+    def interp_mult(self):
+        b = self.stack.pop()
+        a = self.stack.pop()
+        self.stack.append(a * b)
+
+    def interp_mult_div(self):
+        c = self.stack.pop()
+        b = self.stack.pop()
+        a = self.stack.pop()
+        self.stack.append((a * b) // c)
+
+    def interp_mult_div_mod(self):
+        c = self.stack.pop()
+        b = self.stack.pop()
+        a = self.stack.pop()
+        self.stack.append((a * b) // c)
+        self.stack.append((a * b) % c)
+
+    def interp_div(self):
+        b = self.stack.pop()
+        a = self.stack.pop()
+        self.stack.append(a // b)
+
+    def interp_div_mod(self):
+        b = self.stack.pop()
+        a = self.stack.pop()
+        self.stack.append(a // b)
+        self.stack.append(a % b)
+
+    def interp_zero_lt(self):
+        a = self.stack.pop()
+        self.stack.append(
+            -1 if a < 0 else 0
+        )
+
+    def interp_zero_eq(self):
+        a = self.stack.pop()
+        self.stack.append(
+            -1 if a == 0 else 0
+        )
+
+    def interp_one_plus(self):
+        a = self.stack.pop()
+        self.stack.append(a + 1)
+
+    def interp_one_minus(self):
+        a = self.stack.pop()
+        self.stack.append(a - 1)
+
+    def interp_two_mult(self):
+        a = self.stack.pop()
+        self.stack.append(a << 1)
+
+    def interp_two_div(self):
+        a = self.stack.pop()
+        self.stack.append(a >> 1)
+
+    def interp_two_drop(self):
+        self.stack.pop()
+        self.stack.pop()
+
+    def interp_two_dup(self):
+        b = self.stack.pop()
+        a = self.stack.pop()
+        self.stack.append(a)
+        self.stack.append(b)
+        self.stack.append(a)
+        self.stack.append(b)
+    
+    def interp_two_over(self):
+        d = self.stack.pop()
+        c = self.stack.pop()
+        b = self.stack.pop()
+        a = self.stack.pop()
+        self.stack.append(a)
+        self.stack.append(b)
+        self.stack.append(c)
+        self.stack.append(d)
+        self.stack.append(a)
+        self.stack.append(b)
+    
+    def interp_two_swap(self):
+        d = self.stack.pop()
+        c = self.stack.pop()
+        b = self.stack.pop()
+        a = self.stack.pop()
+        self.stack.append(c)
+        self.stack.append(d)
+        self.stack.append(a)
+        self.stack.append(b)
+
+    def interp_key(self):
+        a = int(input())
+        self.stack.append(a)
+
+    def interp_dot(self):
+        print(self.stack.pop())
+
+    def interp_dot_string(self, tokens: List[str]):
+        s = ' '.join(tokens[1:])
+        print(s[:-1])
 
     def interp_dup(self):
         v = self.stack.pop()
