@@ -21,3 +21,11 @@ Eith programs can be run with the provided interpreter:
 ```
 python eith.py <PATH TO EITH SOURCE FILE>
 ```
+
+## Limitations
+
+Eith does not implement all of the Forth Core. It is notably missing any words that
+deal with memory and addressing, several multi-word constructs, and user-defined words.
+
+Due to interpreting line-by-line, Eith also requires that each line must be independently interpretable.
+This means that certain constructs, such as `IF ... THEN` or `DO ... LOOP` must be on one line.
